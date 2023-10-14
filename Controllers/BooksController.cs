@@ -6,10 +6,19 @@ namespace WebApplication1.Controllers
 {
     public class BooksController : Controller
     {
-        // GET: BooksController
-        public ActionResult Index()
+        // GET: BooksController/{pageIndex}${sortBy}
+        public IActionResult Index(int? pageIndex, string sortBy)
         {
-            return View();
+            if (!pageIndex.HasValue)
+            {
+                pageIndex = 1;
+            }
+            if (String.IsNullOrWhiteSpace(sortBy))
+            {
+                sortBy = "title";
+            }
+
+            return Content(String.Format("pageIndex={0}&sortBy={1}", pageIndex, sortBy));
         }
 
         // GET: BooksController/Details/5
@@ -64,7 +73,7 @@ namespace WebApplication1.Controllers
         public IActionResult Random()
         {
             var firstBook = new book() { Author = "Random author", Title = "Random title" };
-            return RedirectToAction("Index", "Home", new {page = 1, sortBy = "title"}) ;
+            return RedirectToAction("Index", "Book", new {page = 1, sortBy = "title"}) ;
         }
 
         // GET: BooksController/Delete/5
