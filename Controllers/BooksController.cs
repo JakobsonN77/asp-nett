@@ -64,7 +64,7 @@ namespace WebApplication1.Controllers
         public IActionResult Random()
         {
             var firstBook = new book() { Author = "Random author", Title = "Random title" };
-            return View(firstBook);
+            return RedirectToAction("Index", "Home", new {page = 1, sortBy = "title"}) ;
         }
 
         // GET: BooksController/Delete/5
